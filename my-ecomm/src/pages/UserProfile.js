@@ -68,73 +68,76 @@ const UserProfile = () => {
 
   return (
     <Container className="mt-5">
-      <Row className="justify-content-md-center">
-        <Col md={6}>
-          <h1>Perfil del Usuario</h1>
-          {user ? (
-            <>
-              <Form onSubmit={handleSave}>
-                <Form.Group className="mb-3">
-                  <Form.Label>Nombre</Form.Label>
-                  <Form.Control
-                    type="text"
-                    defaultValue={userData.name || ''}
-                    name="name"
-                    required
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Email</Form.Label>
-                  <Form.Control
-                    type="email"
-                    defaultValue={userData.email || user.email}
-                    name="email"
-                    disabled
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Fecha de Nacimiento</Form.Label>
-                  <Form.Control
-                    type="date"
-                    defaultValue={userData.birthdate || ''}
-                    name="birthdate"
-                  />
-                </Form.Group>
-                <Form.Group className="mb-3">
-                  <Form.Label>Imagen de Perfil</Form.Label>
-                  <Form.Control type="file" onChange={handleImageChange} />
-                  <Button variant="primary" onClick={handleUpload}>
-                    Subir Imagen
-                  </Button>
-                  {imageURL && <img src={imageURL} alt="Perfil" width="100" />}
-                </Form.Group>
-                <Button type="submit" variant="success">
-                  Guardar Cambios
-                </Button>
-              </Form>
-              <hr />
-              <h2>Historial de Compras</h2>
-              {history.length > 0 ? (
-                <ul>
-                  {history.map((purchase, index) => (
-                    <li key={index}>
-                      {purchase.date} - {purchase.items.join(', ')} - Total: ${purchase.total}
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <p>No hay compras registradas.</p>
-              )}
-              <hr />
-              <Button variant="danger" onClick={handleLogout}>
-                Cerrar Sesión
-              </Button>
-            </>
-          ) : (
-            <p>No hay ningún usuario autenticado.</p>
-          )}
-        </Col>
-      </Row>
+      <div className="user-profile-grid">
+        <div className="profile-form">
+          <h1 className="display-4">Perfil del Usuario</h1>
+          <Form onSubmit={handleSave}>
+            <Form.Group className="mb-3">
+              <Form.Label>Nombre</Form.Label>
+              <Form.Control
+                type="text"
+                defaultValue={userData.name || ''}
+                name="name"
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type="email"
+                defaultValue={userData.email || user.email}
+                name="email"
+                disabled
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Label>Fecha de Nacimiento</Form.Label>
+              <Form.Control
+                type="date"
+                defaultValue={userData.birthdate || ''}
+                name="birthdate"
+              />
+            </Form.Group>
+            <Button type="submit" variant="success">
+              Guardar Cambios
+            </Button>
+          </Form>
+        </div>
+        
+        <div className="profile-image">
+          <h2 className="display-4">Imagen de Perfil</h2>
+          <Form.Group className="mb-3">
+            <Form.Control type="file" onChange={handleImageChange} />
+            <Button variant="primary" onClick={handleUpload}>
+              Subir Imagen
+            </Button>
+          </Form.Group>
+          {imageURL && <img src={imageURL} alt="Perfil" width="150" />}
+        </div>
+      </div>
+      
+      <hr />
+
+      <div className="purchase-history">
+        <h2>Historial de Compras</h2>
+        {history.length > 0 ? (
+          <ul>
+            {history.map((purchase, index) => (
+              <li key={index}>
+                {purchase.date} - {purchase.items.join(', ')} - Total: ${purchase.total}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No hay compras registradas.</p>
+        )}
+      </div>
+
+      <hr />
+      
+      <Button variant="danger" onClick={handleLogout}>
+        Cerrar Sesión
+      </Button>
     </Container>
   );
 };

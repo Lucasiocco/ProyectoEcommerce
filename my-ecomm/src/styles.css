@@ -178,6 +178,55 @@ button:hover, .btn:hover {
   margin-top: 15px;
 }
 
+/* CARRITO */
+
+.text-end.mt-4 {
+  margin-bottom: 50px;
+}
+
+/* PROFILE */
+
+.user-profile-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 20px;
+  align-items: start;
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.profile-image {
+  text-align: center;
+}
+
+.profile-image img {
+  margin-top: 10px;
+  border-radius: 50%;
+  object-fit: cover;
+  width: 150px;
+  height: 150px;
+}
+
+.purchase-history ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.purchase-history li {
+  background-color: #f8f9fa;
+  padding: 10px;
+  border: 1px solid #ddd;
+  margin-bottom: 10px;
+  border-radius: 4px;
+}
+
+.mt-5.container {
+  padding-bottom: 50px;
+}
+
 /* LOGIN PAGE */
 
 .col-md-6 {
