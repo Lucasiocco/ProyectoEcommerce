@@ -5,10 +5,9 @@ const Footer = () => {
   return (
     <footer className="footer py-4 mt-auto">
       <Container>
-        <Row>
+        <Row className='rowFooter'>
           <Col md={4}>
             <img src='./img/logoUrban.png' width="70%"/>
-            <p>La mejor tienda de ropa urbana unisex.</p>
           </Col>
           <Col md={4}>
             <h5>Nuestras Redes</h5>

@@ -105,7 +105,6 @@ const UserProfile = () => {
         </div>
         
         <div className="profile-image">
-          <h2 className="display-4">Imagen de Perfil</h2>
           <Form.Group className="mb-3">
             <Form.Control type="file" onChange={handleImageChange} />
             <Button variant="primary" onClick={handleUpload}>

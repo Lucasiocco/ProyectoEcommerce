@@ -1,56 +1,61 @@
 import React from 'react';
-import { useState } from 'react';
 import { Container, ListGroup, Button, Row, Col } from 'react-bootstrap';
-import { addDoc, collection } from 'firebase/firestore'; // Importar Firestore
-import { db, auth } from '../firebaseConfig'; // Asegúrate de que db esté correctamente configurado en firebaseConfig
+import { addDoc, collection, doc, updateDoc, arrayUnion } from 'firebase/firestore';
+import { db, auth } from '../firebaseConfig'; 
 import { useNavigate } from 'react-router-dom';
 
 const CartPage = ({ cart, removeFromCart, clearCart }) => {
-  const [orderId, setOrderId] = useState(null); // Estado para almacenar el ID de la orden
+  const totalPrice = cart.reduce((total, product) => total + product.price, 0);
   const navigate = useNavigate();
 
-  const totalPrice = cart.reduce((total, product) => total + product.price, 0);
+  // Función para confirmar la compra
+  const handleConfirmPurchase = async () => {
+    if (cart.length === 0) {
+      alert('El carrito está vacío.');
+      return;
+    }
 
-    // Función para confirmar la compra
-    const handleConfirmPurchase = async () => {
-      if (cart.length === 0) {
-        alert('El carrito está vacío.');
+    try {
+      const user = auth.currentUser;
+      if (!user) {
+        alert('Debes iniciar sesión para confirmar la compra.');
         return;
       }
-  
-      try {
-        const user = auth.currentUser;
-        if (!user) {
-          alert('Debes iniciar sesión para confirmar la compra.');
-          return;
-        }
-  
-        // Crear una nueva orden en Firestore
-        const orderRef = await addDoc(collection(db, 'orders'), {
-          userId: user.uid,
-          items: cart,
+
+      // Crear una nueva orden en Firestore
+      const orderRef = await addDoc(collection(db, 'orders'), {
+        userId: user.uid,
+        items: cart,
+        total: totalPrice,
+        date: new Date().toISOString(),
+      });
+
+      // Actualizar el historial de compras del usuario en Firestore
+      const userRef = doc(db, 'users', user.uid);
+      await updateDoc(userRef, {
+        purchaseHistory: arrayUnion({
+          orderId: orderRef.id,
+          items: cart.map(item => item.name),
           total: totalPrice,
           date: new Date().toISOString(),
-        });
-  
-        // Guardar el ID de la orden
-        setOrderId(orderRef.id);
-  
-        // Limpiar el carrito
-        clearCart();
-  
-        // Mostrar una alerta y redirigir
-        alert(`Compra confirmada. Tu ID de orden es: ${orderRef.id}`);
-        navigate('/userprofile'); // Redirigir al perfil del usuario
-      } catch (error) {
-        console.error('Error confirmando la compra: ', error);
-        alert('Hubo un problema al confirmar la compra. Por favor, intenta de nuevo.');
-      }
-    };
+        })
+      });
+
+      // Limpiar el carrito
+      clearCart();
+
+      // Mostrar una alerta y redirigir
+      alert(`Compra confirmada. Tu ID de orden es: ${orderRef.id}`);
+      navigate('/userprofile'); // Redirigir al perfil del usuario
+    } catch (error) {
+      console.error('Error confirmando la compra: ', error);
+      alert('Hubo un problema al confirmar la compra. Por favor, intenta de nuevo.');
+    }
+  };
 
   return (
     <Container>
-      <h1 className="text-center my-5">Your Cart</h1>
+      <h1 className="display-4">Your Cart</h1>
       {cart.length === 0 ? (
         <p className="text-center">No hay productos en el carrito.</p>
       ) : (
@@ -58,7 +63,8 @@ const CartPage = ({ cart, removeFromCart, clearCart }) => {
           {cart.map((product, index) => (
             <ListGroup.Item key={index}>
               <Row>
-                <Col md={8}>{product.name}</Col>
+                <Col md={4}>{product.name}</Col>
+                <Col md={4}>{product.description}</Col>
                 <Col md={2}>${product.price}</Col>
                 <Col md={2}>
                   <Button variant="danger" onClick={() => removeFromCart(index)}>Remove</Button>
@@ -77,6 +83,7 @@ const CartPage = ({ cart, removeFromCart, clearCart }) => {
       )}
     </Container>
   );
-}
+};
 
 export default CartPage;
+

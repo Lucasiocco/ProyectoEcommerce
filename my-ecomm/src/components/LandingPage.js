@@ -11,21 +11,21 @@ const LandingPage = () => {
       <Button variant="primary" href="/shop" className="btn">Shop Now</Button>
       <div class="container about">
         <div class="img">
-        <img src="./img/pop-art.jpg" class="d-block w-100" alt="..." />
+        <img src="./img/pop-art-min.jpg" class="d-block w-100" alt="..." />
         </div>
         <div class="img2">
-        <img src="./img/color-block.jpg" class="d-block w-100" alt="..." />
+        <img src="./img/color-block-min.jpg" class="d-block w-100" alt="..." />
         </div>
         <div id="carouselSlidesOnly" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-inner">
             <div class="carousel-item active">
-              <img src="./img/young-adults.jpg" class="d-block w-100" alt="..." />
+              <img src="./img/young-adults-min.jpg" class="d-block w-100" alt="..." />
             </div>
             <div class="carousel-item">
-              <img src="./img/young-adult.jpg" class="d-block w-100" alt="..." />
+              <img src="./img/young-adult-min.jpg" class="d-block w-100" alt="..." />
             </div>
             <div class="carousel-item">
-              <img src="..." class="d-block w-100" alt="..." />
+              <img src="./img/young-adult-min.jpg" class="d-block w-100" alt="..." />
             </div>
           </div>
         </div>

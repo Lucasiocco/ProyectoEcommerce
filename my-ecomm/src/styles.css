@@ -45,7 +45,7 @@ body {
 }
 
 .navbar-brand {
-  margin-right: auto;
+  
 }
 
 .container, .product-card {
@@ -55,6 +55,10 @@ body {
 h1, h3, h5 {
   font-weight: bold;
   margin-bottom: 20px;
+}
+
+.navbar-toggler {
+  background-color: #6A0DAD!important;
 }
 
 /* LANDING PAGE */
@@ -252,4 +256,8 @@ footer {
 footer a {
   color: #f8f9fa;
   text-decoration: none;
+}
+
+.rowFooter {
+  align-items: center;
 }
