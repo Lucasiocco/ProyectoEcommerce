@@ -4,7 +4,7 @@ import { onAuthStateChanged } from 'firebase/auth';
 import { auth } from './firebaseConfig';
 import NavigationBar from './components/Navbar';
 import Footer from './components/Footer';
-import LandingPage from './components/LandingPage';
+import HomePage from './pages/HomePage';
 import ShopPage from './pages/ShopPage';
 import CartPage from './pages/CartPage';
 import AuthPage from './pages/AuthPage';
@@ -36,7 +36,7 @@ const App = () => {
         <NavigationBar />
         <div className="flex-grow-1">
           <Routes>
-            <Route path="/" element={<LandingPage />} />
+            <Route path="/" element={<HomePage />} />
             <Route path="/shop" element={<ShopPage addToCart={addToCart} />} />
             <Route path="/cart" element={user ? <CartPage cart={cart} removeFromCart={removeFromCart} /> : <Navigate to="/auth" />} />
             <Route path="/auth" element={<AuthPage />} />
